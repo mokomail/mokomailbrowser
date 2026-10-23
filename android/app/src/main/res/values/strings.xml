@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MokomailBrowser</string>
+    <string name="settings_title">Настройки</string>
+    <string name="omnibox_hint">Поиск или адрес сайта</string>
+
+    <!-- Нижняя панель -->
+    <string name="action_back">Назад</string>
+    <string name="action_forward">Вперёд</string>
+    <string name="action_home">Домашняя страница</string>
+    <string name="action_tabs">Вкладки</string>
+    <string name="action_menu">Меню</string>
+    <string name="action_reload">Обновить</string>
+    <string name="action_bookmark">В закладки</string>
+    <string name="action_close">Закрыть</string>
+    <string name="incognito_chip">Инкогнито</string>
+
+    <!-- Контекстное меню ссылки -->
+    <string name="ctx_open_new">Открыть в новой вкладке</string>
+    <string name="ctx_open_bg">Открыть в фоне</string>
+    <string name="ctx_open_incognito">Открыть в инкогнито</string>
+    <string name="ctx_copy">Копировать ссылку</string>
+    <string name="ctx_share">Поделиться ссылкой</string>
+    <string name="ctx_image_open">Открыть изображение</string>
+    <string name="ctx_image_save">Сохранить изображение</string>
+    <string name="ctx_image_copy">Копировать адрес изображения</string>
+
+    <!-- Меню -->
+    <string name="menu_new_tab">Новая вкладка</string>
+    <string name="menu_new_incognito">Новая вкладка инкогнито</string>
+    <string name="menu_refresh">Обновить страницу</string>
+    <string name="menu_home">Домашняя страница</string>
+    <string name="menu_bookmark_add">Добавить в закладки</string>
+    <string name="menu_bookmarks">Закладки</string>
+    <string name="menu_history">История</string>
+    <string name="menu_find">Найти на странице</string>
+    <string name="menu_desktop">Версия для ПК</string>
+    <string name="menu_share">Поделиться</string>
+    <string name="menu_downloads">Загрузки</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_about">О браузере</string>
+
+    <!-- Вкладки -->
+    <string name="tabs_title">Вкладки</string>
+    <string name="tabs_new">Новая вкладка</string>
+    <string name="tabs_close_all">Закрыть все</string>
+</resources>
