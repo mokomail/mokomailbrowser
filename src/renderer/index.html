@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: http:; font-src 'self' data:; connect-src 'self' https: http:;"
+  />
+  <title>MokomailBrowser</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- ── Вкладки и кнопки окна ─────────────────────────────────────── -->
+    <div id="tabstrip" class="tabstrip">
+      <div id="tabs" class="tabs"></div>
+      <button id="new-tab" class="tab-new" data-icon="plus" title="Новая вкладка (Ctrl+T)"></button>
+      <div class="drag-spacer"></div>
+      <div class="window-controls">
+        <button id="win-min" class="wbtn" data-icon="min" title="Свернуть"></button>
+        <button id="win-max" class="wbtn" data-icon="max" title="Развернуть"></button>
+        <button id="win-close" class="wbtn wbtn-close" data-icon="close" title="Закрыть"></button>
+      </div>
+    </div>
+
+    <!-- ── Основная колонка: панель, закладки, содержимое ────────────── -->
+    <div id="main-col" class="main-col">
+      <div id="toolbar" class="toolbar">
+        <button id="nav-back" class="tbtn" data-icon="back" title="Назад (Alt+←)"></button>
+        <button id="nav-forward" class="tbtn" data-icon="forward" title="Вперёд (Alt+→)"></button>
+        <button id="nav-reload" class="tbtn" data-icon="reload" title="Обновить (F5)"></button>
+        <button id="nav-home" class="tbtn" data-icon="home" title="Домашняя страница"></button>
+
+        <div id="omnibox-wrap" class="omnibox">
+          <span id="security" class="security" data-icon="globe" title="Информация о странице"></span>
+          <input id="omnibox" type="text" spellcheck="false" autocomplete="off" placeholder="Введите адрес или поисковый запрос" />
+          <span id="incognito-badge" class="chip incognito-chip hidden" title="Режим инкогнито: история и cookie не сохраняются">🕶 Инкогнито</span>
+          <span id="zoom-chip" class="chip hidden"></span>
+          <button id="bookmark-star" class="obtn" data-icon="star" title="Добавить в закладки (Ctrl+D)"></button>
+          <div id="suggestions" class="suggestions hidden"></div>
+        </div>
+
+        <button id="btn-profile" class="tbtn profile-btn" data-icon="user" title="Профиль"></button>
+        <button id="btn-downloads" class="tbtn" data-icon="downloads" title="Загрузки (Ctrl+J)"></button>
+        <button id="btn-history" class="tbtn" data-icon="history" title="История (Ctrl+H)"></button>
+        <button id="btn-menu" class="tbtn" data-icon="menu" title="Меню"></button>
+      </div>
+
+      <!-- ── Панель закладок ─────────────────────────────────────────── -->
+      <div id="bookmarks-bar" class="bookmarks-bar"></div>
+
+      <!-- ── Область содержимого ─────────────────────────────────────── -->
+      <main id="content" class="content" data-mode="newtab">
+        <div id="views" class="views"></div>
+
+        <section id="newtab" class="newtab">
+          <div class="newtab-inner">
+            <div class="incognito-notice hidden" id="incognito-notice">
+              <span class="incognito-notice-icon">🕶</span>
+              <div>
+                <strong>Режим инкогнито</strong>
+                <p>История, cookie и данные сайтов не сохраняются после закрытия окна.</p>
+              </div>
+            </div>
+
+            <div class="newtab-logo">
+              <span class="newtab-mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48" role="img" focusable="false">
+                  <defs>
+                    <linearGradient id="bpLogoGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#6C8CFF" />
+                      <stop offset="1" stop-color="#3F5CD0" />
+                    </linearGradient>
+                  </defs>
+                  <rect x="0" y="0" width="48" height="48" rx="12" fill="url(#bpLogoGrad)" />
+                  <circle cx="24" cy="24" r="13" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-opacity="0.95" />
+                  <polygon points="24,12 28.4,24 24,36 19.6,24" fill="#ffffff" />
+                </svg>
+              </span>
+              <span class="newtab-name">MokomailBrowser</span>
+            </div>
+            <form class="newtab-search" id="newtab-search">
+              <span class="newtab-search-icon" data-icon="search"></span>
+              <input id="newtab-input" type="text" placeholder="Поиск или адрес сайта" autocomplete="off" />
+            </form>
+
+            <div class="newtab-section" id="topsites-section">
+              <div class="newtab-section-title">Часто посещаемые</div>
+              <div class="quicklinks" id="topsites"></div>
+            </div>
+
+            <div class="newtab-section">
+              <div class="newtab-section-title">Быстрые ссылки</div>
+              <div class="quicklinks" id="quicklinks"></div>
+              <button class="quicklink-add" id="quicklink-add" data-icon="plus" title="Добавить сайт">Добавить сайт</button>
+            </div>
+          </div>
+        </section>
+
+        <div id="findbar" class="findbar hidden">
+          <span class="findbar-icon" data-icon="search"></span>
+          <input id="find-input" type="text" placeholder="Найти на странице" autocomplete="off" />
+          <span id="find-count" class="find-count">0/0</span>
+          <button id="find-prev" class="fbtn" data-icon="back" title="Предыдущее"></button>
+          <button id="find-next" class="fbtn" data-icon="forward" title="Следующее"></button>
+          <button id="find-close" class="fbtn" data-icon="close" title="Закрыть (Esc)"></button>
+        </div>
+
+        <div id="status" class="status hidden"></div>
+        <div id="drop-overlay" class="drop-overlay hidden">Отпустите, чтобы открыть файл</div>
+      </main>
+    </div>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="menu-popup" class="menu-popup hidden"></div>
+  <div id="tab-menu" class="menu-popup hidden"></div>
+  <div id="toast-root" class="toast-root"></div>
+  <div id="palette-root"></div>
+
+  <script src="icons.js"></script>
+  <script src="material.js"></script>
+  <script src="core.js"></script>
+  <script src="tabs.js"></script>
+  <script src="ui.js"></script>
+  <script src="palette.js"></script>
+  <script src="panels.js"></script>
+  <script src="onboarding.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

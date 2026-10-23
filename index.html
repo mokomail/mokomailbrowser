@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MokomailBrowser — скачать браузер</title>
+<meta name="description" content="MokomailBrowser — быстрый браузер от команды MokomailTeam. Скачать для Windows и Android.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%234a63e7'/%3E%3Ccircle cx='24' cy='24' r='13' fill='none' stroke='%23fff' stroke-width='2.4'/%3E%3Cpolygon points='24,12 28.4,24 24,36 19.6,24' fill='%23fff'/%3E%3C/svg%3E">
+<!--
+  Лендинг MokomailBrowser (Material 3).
+  Если переносите страницу в другое место — поправьте пути к файлам установки
+  в блоке DOWNLOADS ниже (или положите .exe/.apk рядом с index.html).
+-->
+<style>
+/* ── Material 3: цветовые роли ─────────────────────────────────────────── */
+:root {
+  --m3-primary: #4a5bc4;
+  --m3-on-primary: #ffffff;
+  --m3-primary-container: #dee0ff;
+  --m3-on-primary-container: #00105c;
+  --m3-secondary-container: #e2e0ec;
+  --m3-on-secondary-container: #191a23;
+  --m3-surface: #fbf8ff;
+  --m3-surface-dim: #dbd9e0;
+  --m3-surface-container-low: #f5f2fa;
+  --m3-surface-container: #efedf4;
+  --m3-surface-container-high: #e9e7ef;
+  --m3-surface-container-highest: #e3e1e8;
+  --m3-on-surface: #1b1b21;
+  --m3-on-surface-variant: #46464f;
+  --m3-outline: #767680;
+  --m3-outline-variant: #c6c6d0;
+  --m3-inverse-surface: #303036;
+  --m3-inverse-on-surface: #f3eff7;
+  --m3-scrim: 0 0 0;
+  --m3-success: #1f7a3d;
+  color-scheme: light;
+}
+html[data-theme="dark"] {
+  --m3-primary: #bdc2ff;
+  --m3-on-primary: #1b2678;
+  --m3-primary-container: #33409c;
+  --m3-on-primary-container: #dee0ff;
+  --m3-secondary-container: #45464f;
+  --m3-on-secondary-container: #e3e1ec;
+  --m3-surface: #131319;
+  --m3-surface-dim: #131319;
+  --m3-surface-container-low: #1b1b21;
+  --m3-surface-container: #1f1f25;
+  --m3-surface-container-high: #2a2a30;
+  --m3-surface-container-highest: #35343b;
+  --m3-on-surface: #e4e1e9;
+  --m3-on-surface-variant: #c6c4d0;
+  --m3-outline: #90909c;
+  --m3-outline-variant: #45464f;
+  --m3-inverse-surface: #e4e1e9;
+  --m3-inverse-on-surface: #303036;
+  --m3-success: #7ddb9b;
+  color-scheme: dark;
+}
+
+/* ── База ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--m3-surface);
+  color: var(--m3-on-surface);
+  font-family: "Roboto", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .3s ease, color .3s ease;
+}
+a { color: var(--m3-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { width: min(1160px, 100% - 40px); margin-inline: auto; }
+.eyebrow { font: 500 12px/1 "Roboto", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--m3-primary); }
+
+/* ── Верхняя панель ────────────────────────────────────────────────────── */
+.appbar {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--m3-surface) 88%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--m3-outline-variant);
+}
+.appbar__row { display: flex; align-items: center; gap: 16px; height: 68px; }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 19px; color: var(--m3-on-surface); }
+.brand:hover { text-decoration: none; }
+.brand svg { display: block; }
+.appbar__spacer { flex: 1; }
+.appbar nav { display: flex; gap: 6px; }
+.appbar nav a {
+  color: var(--m3-on-surface-variant); font-weight: 500; font-size: 14px;
+  padding: 8px 14px; border-radius: 999px;
+}
+.appbar nav a:hover { background: var(--m3-surface-container-high); text-decoration: none; }
+@media (max-width: 720px) { .appbar nav { display: none; } }
+
+/* ── Кнопки M3 ─────────────────────────────────────────────────────────── */
+.btn {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  height: 44px; padding: 0 24px; border: none; border-radius: 22px;
+  font: 500 15px/1 "Roboto", sans-serif; cursor: pointer; white-space: nowrap;
+  transition: box-shadow .2s ease, background-color .2s ease;
+  text-decoration: none;
+}
+.btn:hover { text-decoration: none; }
+.btn--filled { background: var(--m3-primary); color: var(--m3-on-primary); }
+.btn--filled:hover { box-shadow: 0 1px 3px rgba(0,0,0,.3), 0 4px 8px 3px rgba(0,0,0,.15); }
+.btn--tonal { background: var(--m3-secondary-container); color: var(--m3-on-secondary-container); }
+.btn--outlined { background: transparent; color: var(--m3-primary); box-shadow: inset 0 0 0 1px var(--m3-outline); }
+.btn--text { background: transparent; color: var(--m3-primary); padding: 0 12px; }
+.btn--lg { height: 52px; border-radius: 26px; padding: 0 30px; font-size: 16px; }
+.btn--icon { width: 44px; height: 44px; padding: 0; border-radius: 50%; }
+.btn svg { flex: 0 0 auto; }
+.ripple-wave {
+  position: absolute; border-radius: 50%; background: currentColor; opacity: .22;
+  transform: scale(0); animation: wave .6s ease-out; pointer-events: none;
+}
+@keyframes wave { to { transform: scale(2.6); opacity: 0; } }
+
+/* ── Hero ──────────────────────────────────────────────────────────────── */
+.hero { position: relative; padding: 84px 0 72px; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; inset: -30% -10% auto -10%; height: 620px;
+  background:
+    radial-gradient(closest-side, color-mix(in srgb, var(--m3-primary) 26%, transparent), transparent 72%),
+    radial-gradient(closest-side at 78% 30%, color-mix(in srgb, var(--m3-primary-container) 55%, transparent), transparent 70%);
+  filter: blur(10px); z-index: 0; pointer-events: none;
+}
+.hero__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+@media (max-width: 940px) { .hero__grid { grid-template-columns: 1fr; gap: 36px; text-align: center; } }
+.hero h1 { font-size: clamp(34px, 5vw, 56px); line-height: 1.06; letter-spacing: -.02em; margin: 16px 0 14px; font-weight: 700; }
+.hero p.lead { font-size: 17px; color: var(--m3-on-surface-variant); max-width: 54ch; margin: 0 0 28px; }
+@media (max-width: 940px) { .hero p.lead { margin-inline: auto; } }
+.hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 940px) { .hero__cta { justify-content: center; } }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+@media (max-width: 940px) { .chips { justify-content: center; } }
+.chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 14px; border-radius: 999px; font-size: 13px;
+  background: var(--m3-surface-container-high); color: var(--m3-on-surface-variant);
+  box-shadow: inset 0 0 0 1px var(--m3-outline-variant);
+}
+.hero__art { display: flex; justify-content: center; }
+.shot {
+  width: 100%; max-width: 520px; border-radius: 28px; overflow: hidden;
+  background: var(--m3-surface-container);
+  box-shadow: 0 12px 28px rgba(0,0,0,.22), 0 2px 6px rgba(0,0,0,.14);
+  border: 1px solid var(--m3-outline-variant);
+}
+.shot img { display: block; width: 100%; height: auto; }
+
+/* ── Секции ────────────────────────────────────────────────────────────── */
+section { padding: 68px 0; }
+.section-head { max-width: 720px; margin-bottom: 34px; }
+.section-head h2 { font-size: clamp(26px, 3.4vw, 38px); letter-spacing: -.01em; margin: 12px 0 10px; font-weight: 650; }
+.section-head p { color: var(--m3-on-surface-variant); font-size: 16px; margin: 0; }
+
+/* ── Карточки загрузки ─────────────────────────────────────────────────── */
+.downloads { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 940px) { .downloads { grid-template-columns: 1fr; } }
+.card {
+  background: var(--m3-surface-container-low);
+  border: 1px solid var(--m3-outline-variant);
+  border-radius: 24px; padding: 26px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .2s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,.18); background: var(--m3-surface-container); }
+.card--feature { gap: 16px; }
+.card__icon {
+  width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center;
+  background: var(--m3-primary-container); color: var(--m3-on-primary-container);
+}
+.card--feature .card__icon { border-radius: 16px; }
+.card h3 { margin: 0; font-size: 19px; font-weight: 650; }
+.card p { margin: 0; color: var(--m3-on-surface-variant); font-size: 14.5px; }
+.card__meta { font-size: 13px; color: var(--m3-on-surface-variant); display: flex; gap: 8px; flex-wrap: wrap; }
+.card__foot { margin-top: auto; padding-top: 6px; display: flex; gap: 10px; flex-wrap: wrap; }
+.badge {
+  display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 600;
+  background: var(--m3-primary-container); color: var(--m3-on-primary-container);
+}
+
+/* ── Возможности ───────────────────────────────────────────────────────── */
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 940px) { .features { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .features { grid-template-columns: 1fr; } }
+
+/* ── Шаги установки ────────────────────────────────────────────────────── */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: step; }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
+.step { position: relative; padding-left: 66px; }
+.step::before {
+  counter-increment: step; content: counter(step);
+  position: absolute; left: 0; top: 0;
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--m3-primary); color: var(--m3-on-primary); font-weight: 700; font-size: 18px;
+}
+.step h3 { margin: 6px 0 6px; font-size: 17px; }
+.step p { margin: 0; color: var(--m3-on-surface-variant); font-size: 14.5px; }
+
+/* ── Ленты / галерея ───────────────────────────────────────────────────── */
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 860px) { .gallery { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .gallery { grid-template-columns: 1fr; } }
+.gallery figure { margin: 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--m3-outline-variant); background: var(--m3-surface-container); }
+.gallery img { display: block; width: 100%; height: auto; }
+.gallery figcaption { padding: 10px 14px; font-size: 13px; color: var(--m3-on-surface-variant); }
+.gallery.is-empty { display: none; }
+
+/* ── CTA-полоса ────────────────────────────────────────────────────────── */
+.cta {
+  border-radius: 28px; padding: 48px;
+  background: linear-gradient(135deg, var(--m3-primary-container), var(--m3-surface-container-high));
+  color: var(--m3-on-primary-container);
+  display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+}
+.cta h2 { margin: 0 0 6px; font-size: 26px; }
+.cta p { margin: 0; opacity: .82; }
+
+/* ── Подвал ────────────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--m3-outline-variant);
+  background: var(--m3-surface-container-low);
+  padding: 40px 0; margin-top: 20px;
+}
+.foot { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.foot__links { display: flex; gap: 8px; flex-wrap: wrap; }
+.foot__links a { color: var(--m3-on-surface-variant); font-size: 14px; padding: 8px 12px; border-radius: 999px; }
+.foot__links a:hover { background: var(--m3-surface-container-high); text-decoration: none; }
+.foot small { color: var(--m3-on-surface-variant); }
+
+/* ── Анимация появления ────────────────────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+
+<!-- ── Верхняя панель ─────────────────────────────────────────────────── -->
+<header class="appbar">
+  <div class="wrap appbar__row">
+    <a class="brand" href="#top">
+      <svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#6C8CFF"/><stop offset="1" stop-color="#3F5CD0"/>
+        </linearGradient></defs>
+        <rect width="48" height="48" rx="12" fill="url(#lg)"/>
+        <circle cx="24" cy="24" r="13" fill="none" stroke="#fff" stroke-width="2.4" stroke-opacity=".95"/>
+        <polygon points="24,12 28.4,24 24,36 19.6,24" fill="#fff"/>
+      </svg>
+      MokomailBrowser
+    </a>
+    <span class="appbar__spacer"></span>
+    <nav>
+      <a href="#download">Скачать</a>
+      <a href="#features">Возможности</a>
+      <a href="#install">Установка</a>
+      <a href="#about">О браузере</a>
+    </nav>
+    <button class="btn btn--icon btn--tonal ripple" id="themeBtn" aria-label="Переключить тему" title="Сменить тему"></button>
+  </div>
+</appbar>
+
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="wrap hero__grid">
+    <div>
+      <span class="eyebrow">MokomailTeam · Windows &amp; Android</span>
+      <h1>Быстрый браузер<br>MokomailBrowser</h1>
+      <p class="lead">Тёмная Material-тема, вкладки, закладки, история, поисковики с автоподстановкой домашней страницы, несколько профилей и режим инкогнито. Всё честно работает — без декоративных настроек.</p>
+      <div class="hero__cta">
+        <a class="btn btn--filled btn--lg ripple" data-dl="setup" href="#">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
+          Скачать для Windows
+        </a>
+        <a class="btn btn--outlined btn--lg ripple" data-dl="apk" href="#">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 0 0-.83.22l-1.88 3.24a11.463 11.463 0 0 0-8.94 0L5.65 5.67a.643.643 0 0 0-.87-.2c-.28.18-.37.54-.22.83L6.4 9.48A10.78 10.78 0 0 0 1 18h22a10.78 10.78 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg>
+          Скачать для Android
+        </a>
+      </div>
+      <div class="chips">
+        <span class="chip">🪟 Windows 10 / 11 · x64</span>
+        <span class="chip">🤖 Android 7.0+</span>
+        <span class="chip">🇷🇺 Русский интерфейс</span>
+        <span class="chip">🔓 Без слежки</span>
+      </div>
+    </div>
+    <div class="hero__art">
+      <div class="shot">
+        <img src="docs/preview-newtab.png" alt="Главная страница MokomailBrowser" onerror="this.closest('.shot').style.display='none'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Загрузки ──────────────────────────────────────────────────────────── -->
+<section id="download">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Загрузка</div>
+      <h2>Выберите свою версию</h2>
+      <p>Установщик для Windows ставит браузер в систему и создаёт ярлыки. Портативная версия работает без установки. Для Android — APK-файл.</p>
+    </div>
+    <div class="downloads">
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5L10.5 4.4v7.1H3V5.5zm0 13L10.5 19.6v-7H3v5.9zM11.5 4.2L21 3v8.5h-9.5V4.2zm0 15.6L21 21v-8.5h-9.5v7.3z"/></svg>
+        </div>
+        <h3>Windows · Установщик</h3>
+        <p>Обычная установка в один клик: ярлык на рабочем столе и в меню «Пуск», удаление через «Программы и компоненты».</p>
+        <div class="card__meta"><span>Windows 10/11 · x64</span><span>·</span><span id="size-setup">~106 МБ</span></div>
+        <div class="card__foot">
+          <a class="btn btn--filled ripple" data-dl="setup" href="#">Скачать .exe</a>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+        </div>
+        <h3>Windows · Портативная</h3>
+        <p>Один файл, никаких следов в системе. Запускается с флешки или из любой папки, данные хранятся рядом.</p>
+        <div class="card__meta"><span>Windows 10/11 · x64</span><span>·</span><span id="size-portable">~106 МБ</span></div>
+        <div class="card__foot">
+          <a class="btn btn--tonal ripple" data-dl="portable" href="#">Скачать portable</a>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 9.48l1.84-3.18a.643.643 0 0 0-.87-.83l-1.88 3.24a11.463 11.463 0 0 0-8.94 0L5.65 5.67a.643 6.643 0 0 0-.87-.2c-.28.18-.37.54-.22.83L6.4 9.48A10.78 10.78 0 0 0 1 18h22a10.78 10.78 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg>
+        </div>
+        <h3>Android · APK</h3>
+        <p>Нативный браузер на системном WebView: вкладки как в Chrome, поиск, закладки, история, инкогнито, Material You и ярлыки сайтов на главном экране.</p>
+        <div class="card__meta"><span>Android 7.0+</span><span>·</span><span id="size-apk">~4 МБ</span></div>
+        <div class="card__foot">
+          <a class="btn btn--outlined ripple" data-dl="apk" href="#">Скачать .apk</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── Возможности ───────────────────────────────────────────────────────── -->
+<section id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Возможности</div>
+      <h2>Всё, что нужно от браузера</h2>
+      <p>Каждая настройка действительно работает — ничего декоративного.</p>
+    </div>
+    <div class="features">
+      <article class="card card--feature reveal">
+        <div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 16H5V5h14v14z"/></svg></div>
+        <h3>Вкладки</h3>
+        <p>Множество вкладок, список вкладок и недавно закрытые, закрепление и отключение звука.</p>
+      </article>
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 13.2 14.7l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+        </div>
+        <h3>Поисковик = домашняя</h3>
+        <p>Смена поисковой системы автоматически меняет домашнюю страницу. Google, Яндекс, DuckDuckGo, Bing и другие.</p>
+      </article>
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-3 7 3V5a2 2 0 0 0-2-2z"/></svg>
+        </div>
+        <h3>Закладки и история</h3>
+        <p>Панель закладок, быстрый доступ, группировка истории по дням и очистка данных за нужный период.</p>
+      </article>
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+        </div>
+        <h3>Профили</h3>
+        <p>Несколько независимых профилей со своими данными, темами и настройками. Активный профиль защищён от удаления.</p>
+      </article>
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
+        </div>
+        <h3>Приватность</h3>
+        <p>Приватные вкладки, блокировка всплывающих окон, управление cookie и очистка данных одним действием.</p>
+      </article>
+      <article class="card reveal">
+        <div class="card__icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6zm5.2 0 4.6-4.6L14.6 7.4 16 6l6 6-6 6z"/></svg>
+        </div>
+        <h3>Мелочи, которые радуют</h3>
+        <p>Шпаргалка по горячим клавишам, палитра команд, экспорт и импорт настроек, загрузки с паузой и возобновлением.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── Установка ─────────────────────────────────────────────────────────── -->
+<section id="install">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Установка</div>
+      <h2>Три шага — и готово</h2>
+    </div>
+    <div class="downloads" style="grid-template-columns:repeat(3,1fr)">
+      <article class="card card--feature reveal">
+        <div class="card__icon">1</div>
+        <h3>Скачайте файл</h3>
+        <p>Установщик <code>.exe</code> для Windows или <code>.apk</code> для Android.</p>
+      </article>
+      <article class="card card--feature reveal">
+        <div class="card__icon">2</div>
+        <h3>Запустите</h3>
+        <p>На Windows — двойной клик по установщику. На Android разрешите установку из неизвестных источников.</p>
+      </article>
+      <article class="card card--feature reveal">
+        <div class="card__icon">3</div>
+        <h3>Выберите поисковик</h3>
+        <p>При первом запуске откроется «первоначалка»: выберите поисковую систему и начинайте работу.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── Скриншоты ─────────────────────────────────────────────────────────── -->
+<section id="screens">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Как это выглядит</div>
+      <h2>Тёмная тема, аккуратный интерфейс</h2>
+    </div>
+    <div class="gallery reveal" id="gallery">
+      <figure><img src="docs/preview-newtab.png" alt="Новая вкладка" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Новая вкладка</figcaption></figure>
+      <figure><img src="docs/preview-settings.png" alt="Настройки" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Настройки</figcaption></figure>
+      <figure><img src="docs/preview-menu.png" alt="Меню" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Меню</figcaption></figure>
+      <figure><img src="docs/preview-site.png" alt="Сайт" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Просмотр сайта</figcaption></figure>
+      <figure><img src="docs/preview-about.png" alt="О браузере" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>О браузере</figcaption></figure>
+      <figure><img src="docs/preview-onboarding.png" alt="Первоначальная настройка" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>Первоначальная настройка</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────────────────────── -->
+<section id="cta">
+  <div class="wrap">
+    <div class="cta reveal">
+      <div>
+        <h2>Готовы установить MokomailBrowser?</h2>
+        <p>Бесплатно. Русский интерфейс. Без рекламы и слежки.</p>
+      </div>
+      <div class="hero__cta">
+        <a class="btn btn--filled btn--lg ripple" data-dl="setup" href="#">Скачать для Windows</a>
+        <a class="btn btn--tonal btn--lg ripple" data-dl="apk" href="#">Скачать для Android</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Подвал ────────────────────────────────────────────────────────────── -->
+<footer id="about">
+  <div class="wrap foot">
+    <div style="display:flex;align-items:center;gap:12px">
+      <svg width="36" height="36" viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6C8CFF"/><stop offset="1" stop-color="#3F5CD0"/></linearGradient></defs>
+        <rect width="48" height="48" rx="12" fill="url(#g2)"/>
+        <circle cx="24" cy="24" r="13" fill="none" stroke="#fff" stroke-width="2.4" stroke-opacity=".95"/>
+        <polygon points="24,12 28.4,24 24,36 19.6,24" fill="#fff"/>
+      </svg>
+      <div>
+        <div style="font-weight:600">MokomailBrowser</div>
+        <small>Версия 1.0.0 · MokomailTeam</small>
+      </div>
+    </div>
+    <nav class="foot__links">
+      <a href="https://www.tiktok.com/@mokomail" target="_blank" rel="noopener">TikTok @mokomail</a>
+      <a href="https://github.com/mokomail" target="_blank" rel="noopener">GitHub mokomail</a>
+      <a href="mailto:team@mokomail.example">Написать нам</a>
+    </nav>
+  </div>
+</section>
+
+<script>
+/* ── Пути к файлам установки (поправьте при переносе сайта) ─────────────── */
+const DOWNLOADS = {
+  setup:    "dist/MokomailBrowser-1.0.0-setup.exe",
+  portable: "dist/MokomailBrowser-1.0.0-portable.exe",
+  apk:      "android/apk/MokomailBrowser-release.apk"
+};
+
+/* Проставляем ссылки всем кнопкам с data-dl */
+document.querySelectorAll("[data-dl]").forEach(el => {
+  const key = el.getAttribute("data-dl");
+  if (DOWNLOADS[key]) el.setAttribute("href", DOWNLOADS[key]);
+});
+
+/* ── Тема: светлая/тёмная с запоминанием ───────────────────────────────── */
+const root = document.documentElement;
+const saved = localStorage.getItem("mm-theme");
+const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+setTheme(saved || (prefersLight ? "light" : "dark"));
+
+function setTheme(theme) {
+  root.setAttribute("data-theme", theme);
+  localStorage.setItem("mm-theme", theme);
+  const btn = document.querySelector(".btn--icon");
+  if (btn) btn.innerHTML = theme === "dark"
+    ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>'
+    : '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36A5.39 5.39 0 0 1 12 3z"/></svg>';
+  if (btn) btn.title = theme === "dark" ? "Светлая тема" : "Тёмная тема";
+}
+
+const toggle = document.querySelector(".btn--icon");
+if (toggle) toggle.addEventListener("click", () => {
+  setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+});
+
+/* ── Ripple-эффект как в Material 3 ────────────────────────────────────── */
+document.addEventListener("pointerdown", e => {
+  const btn = e.target.closest(".btn");
+  if (!btn) return;
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const wave = document.createElement("span");
+  wave.className = "ripple-wave";
+  wave.style.width = wave.style.height = size + "px";
+  wave.style.left = (e.clientX - rect.left - size / 2) + "px";
+  wave.style.top = (e.clientY - rect.top - size / 2) + "px";
+  btn.appendChild(wave);
+  setTimeout(() => wave.remove(), 620);
+});
+
+/* ── Появление блоков при прокрутке ──────────────────────────────────────
+   Проверяем позицию вручную: так блоки не «застревают» невидимыми, если
+   пользователь резко прокрутил страницу или перешёл по якорю. */
+const revealEls = [...document.querySelectorAll(".reveal")];
+function revealVisible() {
+  const limit = window.innerHeight * 0.94;
+  for (const el of revealEls) {
+    if (!el.classList.contains("in") && el.getBoundingClientRect().top < limit) {
+      el.classList.add("in");
+    }
+  }
+}
+window.addEventListener("scroll", revealVisible, { passive: true });
+window.addEventListener("resize", revealVisible);
+window.addEventListener("load", revealVisible);
+revealVisible();
+
+/* ── Скрываем галерею, если ни одной картинки нет ──────────────────────── */
+window.addEventListener("load", () => {
+  const g = document.getElementById("gallery");
+  if (g && g.querySelectorAll("figure").length === 0) g.classList.add("is-empty");
+});
+</script>
+</body>
+</html>
