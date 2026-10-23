@@ -77,21 +77,10 @@
     return `<svg viewBox="0 0 24 24"${s} aria-hidden="true">${body}</svg>`;
   }
 
-  // Фирменный логотип браузера (синий градиент + белый компас).
-  let logoSeg = 0;
+  // Фирменный логотип браузера (растровый значок приложения).
   function logo(size = 40) {
-    const id = `bpLogoGrad${++logoSeg}`;
     const s = size ? ` width="${size}" height="${size}"` : '';
-    return (
-      `<svg viewBox="0 0 48 48"${s} aria-hidden="true">` +
-      `<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">` +
-      `<stop offset="0" stop-color="#6C8CFF"/><stop offset="1" stop-color="#3F5CD0"/>` +
-      `</linearGradient></defs>` +
-      `<rect x="0" y="0" width="48" height="48" rx="11" fill="url(#${id})"/>` +
-      `<circle cx="24" cy="24" r="13" fill="none" stroke="#fff" stroke-width="2.4" stroke-opacity="0.95"/>` +
-      `<polygon points="24,12 28.4,24 24,36 19.6,24" fill="#fff"/>` +
-      `</svg>`
-    );
+    return `<img src="logo.png" alt=""${s} class="bp-logo" draggable="false" />`;
   }
 
   function apply(root) {

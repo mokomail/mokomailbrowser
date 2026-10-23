@@ -1,7 +1,8 @@
 {
   "name": "mokomail-browser",
   "productName": "MokomailBrowser",
-  "version": "1.0.0",
+  "version": "0.1.0",
+  "releaseChannel": "beta",
   "description": "MokomailBrowser — современный браузер на базе Chromium (Electron) в оформлении Material 3: мастер первого запуска, вкладки и группы, плагины, профили, режим инкогнито, омнибокс, закладки, полная история в JSON, загрузки и большое количество настроек.",
   "main": "src/main/main.js",
   "author": "MokomailTeam (https://github.com/mokomail)",
@@ -45,7 +46,7 @@
       "!.gitignore"
     ],
     "win": {
-      "icon": "icons/icon.png",
+      "icon": "icons/icon.ico",
       "target": [
         { "target": "nsis", "arch": ["x64"] },
         { "target": "portable", "arch": ["x64"] }
@@ -57,12 +58,12 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "MokomailBrowser",
-      "artifactName": "${productName}-${version}-setup.${ext}",
-      "uninstallDisplayName": "MokomailBrowser ${version}",
+      "artifactName": "${productName}-${version}-beta-setup.${ext}",
+      "uninstallDisplayName": "MokomailBrowser ${version} beta",
       "include": "build/installer.nsh"
     },
     "portable": {
-      "artifactName": "${productName}-${version}-portable.${ext}"
+      "artifactName": "${productName}-${version}-beta-portable.${ext}"
     }
   }
 }

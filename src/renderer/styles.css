@@ -694,8 +694,8 @@ body[data-animations="off"] .view.active {
 .newtab-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 1.15rem;
+  gap: 18px;
+  font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-dim);
 }
@@ -704,19 +704,27 @@ body[data-animations="off"] .view.active {
   letter-spacing: 0.02em;
 }
 
-/* Фирменный знак браузера: синий градиентный квадрат с белым компасом. */
+/* Фирменный знак браузера. */
 .newtab-mark {
-  width: 40px;
-  height: 40px;
+  width: 68px;
+  height: 68px;
   display: block;
-  border-radius: 11px;
+  border-radius: 19px;
   overflow: hidden;
 }
 
-.newtab-mark svg {
+.newtab-mark svg,
+.newtab-mark img {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.bp-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .newtab-search {
@@ -2338,16 +2346,17 @@ input[type='color'].field {
 }
 
 .about-logo {
-  width: 56px;
-  height: 56px;
+  width: 96px;
+  height: 96px;
   flex: 0 0 auto;
   display: grid;
   place-items: center;
-  border-radius: var(--md-shape-lg);
+  border-radius: calc(var(--md-shape-lg) * 1.4);
   overflow: hidden;
 }
 
-.about-logo svg {
+.about-logo svg,
+.about-logo img {
   display: block;
   width: 100%;
   height: 100%;
@@ -2927,15 +2936,15 @@ input[type='color'].field {
   }
 
   .newtab-logo {
-    font-size: 1rem;
-    gap: 8px;
+    font-size: 1.25rem;
+    gap: 12px;
   }
 
   .newtab-mark {
-    width: 34px;
-    height: 34px;
+    width: 52px;
+    height: 52px;
     font-size: 1.05rem;
-    border-radius: 9px;
+    border-radius: 14px;
   }
 
   .quicklinks {
@@ -2980,8 +2989,9 @@ input[type='color'].field {
   }
 
   .newtab-mark {
-    width: 34px;
-    height: 34px;
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
   }
 
   .palette-overlay {
@@ -2997,7 +3007,7 @@ input[type='color'].field {
   }
 
   .newtab-logo {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
   }
 }
 

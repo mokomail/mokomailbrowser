@@ -21,6 +21,7 @@ const registerIpc = require('./ipc');
 
 // ── Имя бренда ───────────────────────────────────────────────────────────
 const APP_NAME = 'MokomailBrowser';
+const APP_CHANNEL = require('../../package.json').releaseChannel || '';
 app.setName(APP_NAME);
 app.setAppUserModelId('com.mokomail.browser');
 
@@ -55,7 +56,7 @@ let incognitoSeq = 0;
 
 const RENDERER_DIR = path.join(__dirname, '..', 'renderer');
 const PRELOAD = path.join(__dirname, '..', 'preload', 'preload.js');
-const ICON = path.join(__dirname, '..', '..', 'assets', 'icons', 'icon.png');
+const ICON = path.join(__dirname, '..', '..', 'assets', 'icons', 'icon.ico');
 
 /** Отправить сообщение во все окна. */
 function broadcast(channel, payload) {
@@ -178,6 +179,7 @@ function createWindow(options = {}) {
 // ── Контекст для IPC ─────────────────────────────────────────────────────
 const ipcCtx = {
   appName: APP_NAME,
+  appChannel: APP_CHANNEL,
   profiles,
   profile: PROFILE,
   settingsStore,
@@ -200,6 +202,7 @@ const ipcCtx = {
 function buildMenu() {
   createApplicationMenu({
     appName: APP_NAME,
+    appChannel: APP_CHANNEL,
     // Команды меню должны попадать только в активное окно, иначе при двух
     // открытых окнах одно нажатие открывало бы вкладку в каждом.
     send: (channel, payload) => sendToWindow(getFocusedWindow(), channel, payload),
@@ -606,10 +609,12 @@ function runSmokeTest() {
                out.clearOptions = document.querySelectorAll('.modal .clear-option').length;
                BP.panels.closeTopModal();
 
-               out.logoOnNewTab = !!document.querySelector('#newtab .newtab-mark svg');
+               const newtabLogo = document.querySelector('#newtab .newtab-mark img');
+               out.logoOnNewTab = !!(newtabLogo && newtabLogo.complete && newtabLogo.naturalWidth > 0);
                BP.panels.openAbout();
                await new Promise((resolve) => setTimeout(resolve, 200));
-               out.logoInAbout = !!document.querySelector('.about-logo svg');
+               const aboutLogo = document.querySelector('.about-logo img');
+               out.logoInAbout = !!(aboutLogo && aboutLogo.complete && aboutLogo.naturalWidth > 0);
                BP.panels.closeTopModal();
 
                out.exportApi = typeof window.browserAPI.settings.exportFile === 'function';

@@ -16,6 +16,7 @@ const VISITS_PER_ENTRY = 200; // максимум отметок времени 
 function registerIpc(ctx) {
   const {
     appName,
+    appChannel,
     profiles,
     profile,
     settingsStore,
@@ -152,6 +153,7 @@ function registerIpc(ctx) {
   ipcMain.handle('app:get-info', () => ({
     name: appName || 'MokomailBrowser',
     version: app.getVersion(),
+    channel: appChannel || '',
     electron: process.versions.electron,
     chrome: process.versions.chrome,
     node: process.versions.node,
