@@ -582,7 +582,7 @@
         util.el('div', { class: 'about-logo', html: BP.icons.logo(44) }),
         util.el('div', {}, [
           util.el('div', { class: 'about-brand-title', text: info.name || 'MokomailBrowser' }),
-          util.el('div', { class: 'about-brand-sub', text: `Версия ${info.version || '—'} • команда MokomailTeam` }),
+          util.el('div', { class: 'about-brand-sub', text: `Версия ${info.version || '—'}${info.channel ? ' ' + info.channel : ''} • команда MokomailTeam` }),
         ]),
       ])
     );

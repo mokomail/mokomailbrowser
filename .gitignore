@@ -4,6 +4,9 @@ node_modules/
 # Готовые сборки (большие бинарники не храним в репозитории — их место в GitHub Releases)
 dist/
 
+# Артефакты сборки Android
+android/app/build/
+
 # Логи и мусор
 *.log
 npm-debug.log*

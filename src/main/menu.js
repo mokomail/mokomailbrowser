@@ -141,7 +141,7 @@ function createApplicationMenu(ctx) {
               message: ctx.appName || 'MokomailBrowser',
               detail:
                 `MokomailTeam\n` +
-                `Версия: ${app.getVersion()}\n` +
+                `Версия: ${app.getVersion()}${ctx.appChannel ? ' ' + ctx.appChannel : ''}\n` +
                 `Electron: ${process.versions.electron}\n` +
                 `Chromium: ${process.versions.chrome}\n` +
                 `Node.js: ${process.versions.node}`,

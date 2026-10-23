@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MokomailBrowser — скачать браузер</title>
 <meta name="description" content="MokomailBrowser — быстрый браузер от команды MokomailTeam. Скачать для Windows и Android.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%234a63e7'/%3E%3Ccircle cx='24' cy='24' r='13' fill='none' stroke='%23fff' stroke-width='2.4'/%3E%3Cpolygon points='24,12 28.4,24 24,36 19.6,24' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="assets/icons/icon.png">
 <!--
   Лендинг MokomailBrowser (Material 3).
   Если переносите страницу в другое место — поправьте пути к файлам установки
@@ -87,7 +87,8 @@ a:hover { text-decoration: underline; }
 .appbar__row { display: flex; align-items: center; gap: 16px; height: 68px; }
 .brand { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 19px; color: var(--m3-on-surface); }
 .brand:hover { text-decoration: none; }
-.brand svg { display: block; }
+.brand svg,
+.brand__logo { display: block; border-radius: 8px; }
 .appbar__spacer { flex: 1; }
 .appbar nav { display: flex; gap: 6px; }
 .appbar nav a {
@@ -247,14 +248,7 @@ footer {
 <header class="appbar">
   <div class="wrap appbar__row">
     <a class="brand" href="#top">
-      <svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#6C8CFF"/><stop offset="1" stop-color="#3F5CD0"/>
-        </linearGradient></defs>
-        <rect width="48" height="48" rx="12" fill="url(#lg)"/>
-        <circle cx="24" cy="24" r="13" fill="none" stroke="#fff" stroke-width="2.4" stroke-opacity=".95"/>
-        <polygon points="24,12 28.4,24 24,36 19.6,24" fill="#fff"/>
-      </svg>
+      <img src="assets/icons/icon.png" width="34" height="34" alt="" class="brand__logo">
       MokomailBrowser
     </a>
     <span class="appbar__spacer"></span>
@@ -466,15 +460,10 @@ footer {
 <footer id="about">
   <div class="wrap foot">
     <div style="display:flex;align-items:center;gap:12px">
-      <svg width="36" height="36" viewBox="0 0 48 48" aria-hidden="true">
-        <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6C8CFF"/><stop offset="1" stop-color="#3F5CD0"/></linearGradient></defs>
-        <rect width="48" height="48" rx="12" fill="url(#g2)"/>
-        <circle cx="24" cy="24" r="13" fill="none" stroke="#fff" stroke-width="2.4" stroke-opacity=".95"/>
-        <polygon points="24,12 28.4,24 24,36 19.6,24" fill="#fff"/>
-      </svg>
+      <img src="assets/icons/icon.png" width="36" height="36" alt="" class="brand__logo">
       <div>
         <div style="font-weight:600">MokomailBrowser</div>
-        <small>Версия 1.0.0 · MokomailTeam</small>
+        <small>Версия 0.1.0 beta · MokomailTeam</small>
       </div>
     </div>
     <nav class="foot__links">
@@ -488,8 +477,8 @@ footer {
 <script>
 /* ── Пути к файлам установки (поправьте при переносе сайта) ─────────────── */
 const DOWNLOADS = {
-  setup:    "dist/MokomailBrowser-1.0.0-setup.exe",
-  portable: "dist/MokomailBrowser-1.0.0-portable.exe",
+  setup:    "dist/MokomailBrowser-0.1.0-beta-setup.exe",
+  portable: "dist/MokomailBrowser-0.1.0-beta-portable.exe",
   apk:      "android/apk/MokomailBrowser-release.apk"
 };
 
